@@ -49,6 +49,18 @@ export default function ProjectsForm() {
             {...register(`projects.${index}.techStack`)}
           />
 
+          <input
+            className="w-full border p-2 rounded"
+            placeholder="Company/Personal"
+            {...register(`projects.${index}.companyProjectOrPersonal`)}
+          />
+
+          <input
+            className="w-full border p-2 rounded"
+            placeholder="Project Link"
+            {...register(`projects.${index}.link`)}
+          />
+
           <textarea
             className="w-full border p-2 rounded"
             placeholder="Project Description"
@@ -91,6 +103,8 @@ export default function ProjectsForm() {
             endDate: "",
             techStack: "",
             description: "",
+            companyProjectOrPersonal: "Company Project",
+            link: "",
           })
         }
       >
@@ -99,4 +113,3 @@ export default function ProjectsForm() {
     </div>
   );
 }
-

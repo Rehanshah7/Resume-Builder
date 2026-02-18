@@ -48,6 +48,12 @@ export default function PersonalInfoForm() {
 
       <input
         className="w-full border rounded p-2"
+        placeholder="LinkedIn URL"
+        {...register("linkedin")}
+      />
+
+      <input
+        className="w-full border rounded p-2"
         placeholder="Location"
         {...register("location")}
       />

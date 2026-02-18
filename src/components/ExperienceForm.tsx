@@ -29,16 +29,12 @@ export default function ExperienceForm() {
     name: "experiences",
   });
 
-  console.log("watchedExperience", watchedExperience);
-
   useEffect(() => {
     setResumeData((prev) => ({
       ...prev,
       experiences: watchedExperience || [],
     }));
   }, [watchedExperience, setResumeData]);
-
-  console.log("Outside");
 
   return (
     <div className="space-y-4">

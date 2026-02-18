@@ -3,6 +3,7 @@ export type personalInfo = {
   email: string;
   phone: string;
   location: string;
+  linkedin?: string;
   summary: string;
 };
 
@@ -28,6 +29,8 @@ export type project = {
   id: string;
   title: string;
   startDate?: string;
+  companyProjectOrPersonal: "Company Project" | "Personal Project";
+  link?: string;
   endDate?: string;
   techStack: string;
   description: string;
@@ -36,7 +39,7 @@ export type project = {
 export type skill = {
   id: string;
   skillName: string;
-  level: string;
+  level?: string;
 };
 
 export type certificate = {

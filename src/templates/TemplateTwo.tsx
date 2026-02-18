@@ -13,6 +13,13 @@ export default function TemplateTwo({ data }: Props) {
     achievements,
   } = data;
 
+  const companyProjects = projects.filter(
+    (p) => p.companyProjectOrPersonal === "Company Project",
+  );
+  const personalProjects = projects.filter(
+    (p) => p.companyProjectOrPersonal === "Personal Project",
+  );
+
   return (
     <div className="max-w-[850px] mx-auto bg-white px-6 py-5 border-l-[4px] border-black text-black text-[13px] leading-[1.35]">
       {/* Header */}
@@ -23,7 +30,33 @@ export default function TemplateTwo({ data }: Props) {
           </h1>
 
           <span className="text-gray-700 font-normal">
-            {personalInfo.email} • {personalInfo.phone} •{" "}
+            <a
+              href={`mailto:${personalInfo.email}`}
+              className="text-gray-700 hover:underline"
+            >
+              {personalInfo.email}
+            </a>
+            {personalInfo.linkedin && (
+              <>
+                {" • "}
+                <a
+                  href={personalInfo.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-700 hover:underline"
+                >
+                  LinkedIn
+                </a>
+              </>
+            )}
+            {" • "}
+            <a
+              href={`tel:${personalInfo.phone}`}
+              className="text-gray-700 hover:underline"
+            >
+              {personalInfo.phone}
+            </a>
+            {" • "}
             {personalInfo.location}
           </span>
         </div>
@@ -81,7 +114,7 @@ export default function TemplateTwo({ data }: Props) {
 
           <div className="space-y-2">
             {experiences.map((exp) => (
-              <div key={exp.id} className="space-y-0.5">
+              <div key={exp.id} className="space-y-0.5 mb-5">
                 {/* Top row: Job Title + Company + Dates */}
                 <div className="flex justify-between gap-3">
                   <div className="flex-1 min-w-0">
@@ -106,17 +139,81 @@ export default function TemplateTwo({ data }: Props) {
                 )}
               </div>
             ))}
+
+            {companyProjects.map((proj) => (
+              <div key={proj.id} className="space-y-0.5">
+                {/* Top row: Title + Tech Stack + Dates */}
+                <div className="flex justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <span className="font-medium break-words">
+                      {proj.title}
+                    </span>
+                    <span className="text-gray-800 ml-1 text-[12px] italic break-words">
+                      ({proj.companyProjectOrPersonal})
+                    </span>
+                    {proj.techStack && (
+                      <span className="text-gray-800 ml-1 text-[12px] italic break-words">
+                        - {proj.techStack}
+                      </span>
+                    )}
+                  </div>
+
+                  <span className="text-right text-gray-600 whitespace-nowrap">
+                    {proj.startDate}–{proj.endDate}
+                  </span>
+                </div>
+
+                {/* Description on its own line */}
+                {proj.description && (
+                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
+                    {proj.description}
+                  </p>
+                )}
+              </div>
+            ))}
+
+            {companyProjects.map((proj) => (
+              <div key={proj.id} className="space-y-0.5">
+                {/* Top row: Title + Tech Stack + Dates */}
+                <div className="flex justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <span className="font-medium break-words">
+                      {proj.title}
+                    </span>
+                    <span className="text-gray-800 ml-1 text-[12px] italic break-words">
+                      ({proj.companyProjectOrPersonal})
+                    </span>
+                    {proj.techStack && (
+                      <span className="text-gray-800 ml-1 text-[12px] italic break-words">
+                        - {proj.techStack}
+                      </span>
+                    )}
+                  </div>
+
+                  <span className="text-right text-gray-600 whitespace-nowrap">
+                    {proj.startDate}–{proj.endDate}
+                  </span>
+                </div>
+
+                {/* Description on its own line */}
+                {proj.description && (
+                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
+                    {proj.description}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       )}
 
       {/* Projects */}
-      {projects?.length > 0 && (
+      {personalProjects?.length > 0 && (
         <section className="mt-3">
           <h2 className="text-[13px] font-bold uppercase mb-1">Projects</h2>
 
           <div className="space-y-2">
-            {projects.map((proj) => (
+            {personalProjects.map((proj) => (
               <div key={proj.id} className="space-y-0.5">
                 {/* Top row: Title + Tech Stack + Dates */}
                 <div className="flex justify-between gap-3">
@@ -169,17 +266,13 @@ export default function TemplateTwo({ data }: Props) {
       {/* Certificates */}
       {certificates?.length > 0 && (
         <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">
-            Certificates
-          </h2>
+          <h2 className="text-[13px] font-bold uppercase mb-1">Certificates</h2>
 
           <div className="space-y-1">
             {certificates.map((cert) => (
               <div key={cert.id} className="flex justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <span className="font-medium break-words">
-                    {cert.title}
-                  </span>
+                  <span className="font-medium break-words">{cert.title}</span>
                   {cert.issuer && (
                     <span className="text-gray-800 ml-1 break-words">
                       {cert.issuer}
@@ -201,17 +294,13 @@ export default function TemplateTwo({ data }: Props) {
       {/* Achievements */}
       {achievements?.length > 0 && (
         <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">
-            Achievements
-          </h2>
+          <h2 className="text-[13px] font-bold uppercase mb-1">Achievements</h2>
 
           <div className="space-y-1">
             {achievements.map((ach) => (
               <div key={ach.id} className="space-y-0.5">
                 <div className="flex justify-between gap-3">
-                  <span className="font-medium break-words">
-                    {ach.title}
-                  </span>
+                  <span className="font-medium break-words">{ach.title}</span>
                   {ach.year && (
                     <span className="text-right text-gray-600 whitespace-nowrap">
                       {ach.year}

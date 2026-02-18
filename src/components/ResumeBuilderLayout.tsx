@@ -10,14 +10,38 @@ import ProjectsForm from "./ProjectsForm";
 import SkillsForm from "./SkillsForm";
 import CertificatesForm from "./CertificatesForm";
 import AchievementsForm from "./AchievementsForm";
+import { pdf } from "@react-pdf/renderer";
+import { TemplateOnePDF } from "@/templates/TemplateOnePDF";
+import { TemplateTwoPDF } from "@/templates/TemplateTwoPDF";
 
 export default function ResumeBuilderLayout() {
   const { resumeData } = useResume();
 
-  console.log("resumeData", resumeData);
   const [selectedTemplate, setSelectedTemplate] = useState<"one" | "two">(
     "one",
   );
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
+  const handleSaveAsPDF = async () => {
+    setIsGeneratingPDF(true);
+    try {
+      const PDFComponent =
+        selectedTemplate === "one" ? TemplateOnePDF : TemplateTwoPDF;
+      const blob = await pdf(<PDFComponent data={resumeData} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${resumeData.personalInfo.fullName || "resume"}-template-${selectedTemplate}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
@@ -81,9 +105,42 @@ export default function ResumeBuilderLayout() {
 
       {/* Right: Preview Section */}
       <div className="p-6 bg-gray-100 overflow-auto">
-        <h2 className="text-xl text-gray-400 font-semibold mb-4">
-          Live Preview
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl text-gray-400 font-semibold">Live Preview</h2>
+          <button
+            onClick={handleSaveAsPDF}
+            disabled={isGeneratingPDF}
+            className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors cursor-pointer flex items-center gap-2"
+          >
+            {isGeneratingPDF ? (
+              <>
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Generating...
+              </>
+            ) : (
+              "Save as PDF"
+            )}
+          </button>
+        </div>
 
         {selectedTemplate === "one" && <TemplateOne data={resumeData} />}
 
