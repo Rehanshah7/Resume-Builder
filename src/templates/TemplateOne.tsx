@@ -45,6 +45,20 @@ export default function TemplateOne({ data }: Props) {
             </>
           )}
 
+          {personalInfo.github && (
+            <>
+              {" • "}
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Github
+              </a>
+            </>
+          )}
+
           {" • "}
           <a href={`tel:${personalInfo.phone}`} className="hover:underline">
             {personalInfo.phone}
@@ -63,35 +77,6 @@ export default function TemplateOne({ data }: Props) {
           <p className="text-gray-800 whitespace-pre-line">
             {personalInfo.summary}
           </p>
-        </section>
-      )}
-
-      {educations.length > 0 && (
-        <section className="mb-4">
-          <h2 className="font-bold uppercase text-[13px] border-b border-black mb-1 pb-[2px]">
-            Education
-          </h2>
-
-          {educations.map((edu) => (
-            <div key={edu.id} className="mb-2">
-              <div className="flex justify-between">
-                <div>
-                  <span className="font-semibold">{edu.degree}</span>
-                  {" - "}
-                  {edu.school}
-                </div>
-                <span className="text-gray-600">
-                  {edu.startYear} – {edu.endYear}
-                </span>
-              </div>
-
-              {edu.description && (
-                <p className="text-[12px] text-gray-700 mt-1">
-                  {edu.description}
-                </p>
-              )}
-            </div>
-          ))}
         </section>
       )}
 
@@ -211,6 +196,35 @@ export default function TemplateOne({ data }: Props) {
               <div key={skill.id}>• {skill.skillName}</div>
             ))}
           </div>
+        </section>
+      )}
+
+      {educations.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] border-b border-black mb-1 pb-[2px]">
+            Education
+          </h2>
+
+          {educations.map((edu) => (
+            <div key={edu.id} className="mb-2">
+              <div className="flex justify-between">
+                <div>
+                  <span className="font-semibold">{edu.degree}</span>
+                  {" - "}
+                  {edu.school}
+                </div>
+                <span className="text-gray-600">
+                  {edu.startYear} – {edu.endYear}
+                </span>
+              </div>
+
+              {edu.description && (
+                <p className="text-[12px] text-gray-700 mt-1">
+                  {edu.description}
+                </p>
+              )}
+            </div>
+          ))}
         </section>
       )}
 

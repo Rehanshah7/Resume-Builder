@@ -7,6 +7,7 @@ export const defaultResumeData: ResumeData = {
     phone: "8780489143",
     location: "Ahmedabad, Gujarat - 380061",
     linkedin: "https://www.linkedin.com/in/rehan-shah-2a5523282",
+    github: "https://github.com/Rehanshah7",
     summary:
       "Full Stack Engineer with hands-on experience building production-grade MERN and React Native systems. Specialized in secure authentication architectures (JWT, OAuth, RBAC), API performance optimization, and scalable dashboard systems. Published open-source NPM packages and contributed to enterprise applications across web and mobile platforms.",
   },

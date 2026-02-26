@@ -73,11 +73,6 @@ export default function ResumeBuilderLayout() {
 
           <hr className="my-6" />
 
-          <h2 className="text-xl font-semibold mb-4">Education</h2>
-          <EducationForm />
-
-          <hr className="my-6" />
-
           <h2 className="text-xl font-semibold mb-4">Experience</h2>
           <ExperienceForm />
 
@@ -90,6 +85,11 @@ export default function ResumeBuilderLayout() {
 
           <h2 className="text-xl font-semibold mb-4">Skills</h2>
           <SkillsForm />
+
+          <hr className="my-6" />
+
+          <h2 className="text-xl font-semibold mb-4">Education</h2>
+          <EducationForm />
 
           <hr className="my-6" />
 

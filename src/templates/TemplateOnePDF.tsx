@@ -122,6 +122,14 @@ export function TemplateOnePDF({ data }: PDFTemplateProps) {
                 </>
               )}
               {" • "}
+              {personalInfo.github && (
+                <>
+                  <Link src={personalInfo.github} style={styles.link}>
+                    Github
+                  </Link>
+                </>
+              )}
+              {" • "}
               <Link src={`tel:${personalInfo.phone}`} style={styles.link}>
                 {personalInfo.phone}
               </Link>
@@ -136,27 +144,6 @@ export function TemplateOnePDF({ data }: PDFTemplateProps) {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Summary</Text>
             <Text style={styles.description}>{personalInfo.summary}</Text>
-          </View>
-        )}
-
-        {/* Education */}
-        {educations.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Education</Text>
-            {educations.map((edu) => (
-              <View key={edu.id} style={{ marginBottom: 2 }}>
-                <View style={styles.row}>
-                  <Text style={styles.rowText}>
-                    <Text style={{ fontWeight: "bold" }}>{edu.degree}</Text>
-                    {" - "}
-                    {edu.school}
-                  </Text>
-                  <Text style={styles.rowText}>
-                    {edu.startYear} – {edu.endYear}
-                  </Text>
-                </View>
-              </View>
-            ))}
           </View>
         )}
 
@@ -253,6 +240,27 @@ export function TemplateOnePDF({ data }: PDFTemplateProps) {
                 </Text>
               ))}
             </View>
+          </View>
+        )}
+
+        {/* Education */}
+        {educations.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Education</Text>
+            {educations.map((edu) => (
+              <View key={edu.id} style={{ marginBottom: 2 }}>
+                <View style={styles.row}>
+                  <Text style={styles.rowText}>
+                    <Text style={{ fontWeight: "bold" }}>{edu.degree}</Text>
+                    {" - "}
+                    {edu.school}
+                  </Text>
+                  <Text style={styles.rowText}>
+                    {edu.startYear} – {edu.endYear}
+                  </Text>
+                </View>
+              </View>
+            ))}
           </View>
         )}
 

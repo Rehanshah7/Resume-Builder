@@ -4,6 +4,7 @@ export type personalInfo = {
   phone: string;
   location: string;
   linkedin?: string;
+  github?: string;
   summary: string;
 };
 

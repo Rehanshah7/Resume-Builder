@@ -16,306 +16,278 @@ export default function TemplateTwo({ data }: Props) {
   const companyProjects = projects.filter(
     (p) => p.companyProjectOrPersonal === "Company Project",
   );
+
   const personalProjects = projects.filter(
     (p) => p.companyProjectOrPersonal === "Personal Project",
   );
 
   return (
-    <div className="max-w-[850px] mx-auto bg-white px-6 py-5 border-l-[4px] border-black text-black text-[13px] leading-[1.35]">
-      {/* Header */}
-      <header className="mb-3">
-        <div className="flex items-baseline justify-between">
-          <h1 className="text-[22px] font-bold uppercase tracking-tight">
-            {personalInfo.fullName}
-          </h1>
+    <div className="max-w-[850px] mx-auto bg-white px-6 py-5 text-[13px] leading-[1.4] text-black font-sans">
+      <header className="mb-4 flex justify-between items-start">
+        <h1 className="text-[22px] font-bold">{personalInfo.fullName}</h1>
 
-          <span className="text-gray-700 font-normal">
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="text-gray-700 hover:underline"
-            >
-              {personalInfo.email}
-            </a>
-            {personalInfo.linkedin && (
-              <>
-                {" • "}
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-700 hover:underline"
-                >
-                  LinkedIn
-                </a>
-              </>
-            )}
-            {" • "}
-            <a
-              href={`tel:${personalInfo.phone}`}
-              className="text-gray-700 hover:underline"
-            >
-              {personalInfo.phone}
-            </a>
-            {" • "}
-            {personalInfo.location}
-          </span>
+        <div className="text-[12px] text-gray-700 text-right space-x-1">
+          <a href={`mailto:${personalInfo.email}`} className="hover:underline">
+            {personalInfo.email}
+          </a>
+
+          {personalInfo.linkedin && (
+            <>
+              {" • "}
+              <a
+                href={personalInfo.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                LinkedIn
+              </a>
+            </>
+          )}
+
+          {personalInfo.github && (
+            <>
+              {" • "}
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Github
+              </a>
+            </>
+          )}
+
+          {" • "}
+          <a href={`tel:${personalInfo.phone}`} className="hover:underline">
+            {personalInfo.phone}
+          </a>
+
+          {" • "}
+          {personalInfo.location}
         </div>
       </header>
 
-      {/* Summary */}
       {personalInfo.summary && (
-        <section className="mb-3">
-          <p className="text-gray-800 whitespace-pre-line break-words">
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2">
+              Summary
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
+          <p className="text-gray-800 whitespace-pre-line">
             {personalInfo.summary}
           </p>
         </section>
       )}
 
-      {/* Education */}
-      {educations?.length > 0 && (
-        <section>
-          <h2 className="text-[13px] font-bold uppercase mb-1">Education</h2>
+      {experiences.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Experience
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
 
-          <div className="space-y-2">
-            {educations.map((edu) => (
-              <div key={edu.id} className="space-y-0.5">
-                {/* Top row: Degree + School + Dates */}
-                <div className="flex justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium break-words">
-                      {edu.degree}
-                    </span>
-                    <span className="text-gray-800 ml-1 break-words">
-                      {edu.school}
-                    </span>
-                  </div>
+          {experiences.map((exp) => (
+            <div key={exp.id} className="mb-3">
+              <div className="flex justify-between">
+                <div>
+                  <span className="font-semibold">{exp.jobTitle}</span>
+                  {" - "}
+                  {exp.company}
+                </div>
+                <span className="text-gray-600">
+                  {exp.startDate} – {exp.endDate || "Present"}
+                </span>
+              </div>
 
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {edu.startYear}–{edu.endYear}
+              {exp.description && (
+                <p className="text-[12px] text-gray-700 mt-1 whitespace-pre-line">
+                  {exp.description}
+                </p>
+              )}
+            </div>
+          ))}
+
+          {/* Company Projects */}
+          {companyProjects.map((proj) => (
+            <div key={proj.id} className="mb-3">
+              <div className="flex justify-between">
+                <div>
+                  <span className="font-semibold">{proj.title}</span>
+                  <span className="italic text-[12px] ml-1">
+                    ({proj.companyProjectOrPersonal})
                   </span>
+                  {proj.techStack && (
+                    <span className="text-[12px] ml-1">
+                      {" "}
+                      - {proj.techStack}
+                    </span>
+                  )}
                 </div>
 
-                {/* Description on its own line */}
-                {edu.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {edu.description}
-                  </p>
+                {proj.startDate && proj.endDate && (
+                  <span className="text-gray-600">
+                    {proj.startDate} – {proj.endDate}
+                  </span>
                 )}
               </div>
-            ))}
-          </div>
+
+              {proj.description && (
+                <p className="text-[12px] text-gray-700 mt-1 whitespace-pre-line">
+                  {proj.description}
+                </p>
+              )}
+
+              {proj.link && (
+                <p className="text-[12px] text-gray-700">{proj.link}</p>
+              )}
+            </div>
+          ))}
         </section>
       )}
 
-      {/* Experience */}
-      {experiences?.length > 0 && (
-        <section>
-          <h2 className="text-[13px] font-bold uppercase mb-1">Experience</h2>
+      {personalProjects.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Projects
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
 
-          <div className="space-y-2">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="space-y-0.5 mb-5">
-                {/* Top row: Job Title + Company + Dates */}
-                <div className="flex justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium break-words">
-                      {exp.jobTitle}
+          {personalProjects.map((proj) => (
+            <div key={proj.id} className="mb-3">
+              <div className="flex justify-between">
+                <div>
+                  <span className="font-semibold">• {proj.title}</span>
+                  {proj.techStack && (
+                    <span className="italic text-[12px] ml-1">
+                      {" "}
+                      - {proj.techStack}
                     </span>
-                    <span className="text-gray-800 ml-1 break-words">
-                      {exp.company}
-                    </span>
-                  </div>
-
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {exp.startDate}–{exp.endDate || " Present"}
-                  </span>
+                  )}
                 </div>
 
-                {/* Description on its own line */}
-                {exp.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {exp.description}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            {companyProjects.map((proj) => (
-              <div key={proj.id} className="space-y-0.5">
-                {/* Top row: Title + Tech Stack + Dates */}
-                <div className="flex justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium break-words">
-                      {proj.title}
-                    </span>
-                    <span className="text-gray-800 ml-1 text-[12px] italic break-words">
-                      ({proj.companyProjectOrPersonal})
-                    </span>
-                    {proj.techStack && (
-                      <span className="text-gray-800 ml-1 text-[12px] italic break-words">
-                        - {proj.techStack}
-                      </span>
-                    )}
-                  </div>
-
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {proj.startDate}–{proj.endDate}
+                {proj.startDate && proj.endDate && (
+                  <span className="text-gray-600">
+                    {proj.startDate} – {proj.endDate}
                   </span>
-                </div>
-
-                {/* Description on its own line */}
-                {proj.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {proj.description}
-                  </p>
                 )}
               </div>
-            ))}
 
-            {companyProjects.map((proj) => (
-              <div key={proj.id} className="space-y-0.5">
-                {/* Top row: Title + Tech Stack + Dates */}
-                <div className="flex justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium break-words">
-                      {proj.title}
-                    </span>
-                    <span className="text-gray-800 ml-1 text-[12px] italic break-words">
-                      ({proj.companyProjectOrPersonal})
-                    </span>
-                    {proj.techStack && (
-                      <span className="text-gray-800 ml-1 text-[12px] italic break-words">
-                        - {proj.techStack}
-                      </span>
-                    )}
-                  </div>
+              {proj.description && (
+                <p className="text-[12px] text-gray-700 mt-1 whitespace-pre-line">
+                  {proj.description}
+                </p>
+              )}
 
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {proj.startDate}–{proj.endDate}
-                  </span>
-                </div>
-
-                {/* Description on its own line */}
-                {proj.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {proj.description}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
+              {proj.link && (
+                <p className="text-[12px] text-gray-700">{proj.link}</p>
+              )}
+            </div>
+          ))}
         </section>
       )}
 
-      {/* Projects */}
-      {personalProjects?.length > 0 && (
-        <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">Projects</h2>
+      {skills.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Skills
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
 
-          <div className="space-y-2">
-            {personalProjects.map((proj) => (
-              <div key={proj.id} className="space-y-0.5">
-                {/* Top row: Title + Tech Stack + Dates */}
-                <div className="flex justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="font-medium break-words">
-                      {proj.title}
-                    </span>
-                    {proj.techStack && (
-                      <span className="text-gray-800 ml-1 text-[12px] italic break-words">
-                        ({proj.techStack})
-                      </span>
-                    )}
-                  </div>
-
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {proj.startDate}–{proj.endDate}
-                  </span>
-                </div>
-
-                {/* Description on its own line */}
-                {proj.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {proj.description}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Skills */}
-      {skills?.length > 0 && (
-        <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">Skills</h2>
-
-          <div className="flex flex-wrap gap-x-3 gap-y-1 text-[12px]">
+          <div className="grid grid-cols-3 gap-y-1 text-[12px]">
             {skills.map((skill) => (
-              <span key={skill.id} className="text-gray-800 break-words">
-                <span className="font-medium">{skill.skillName}</span>
-                {skill.level && (
-                  <span className="text-gray-600">{` — ${skill.level}`}</span>
-                )}
-              </span>
+              <div key={skill.id}>• {skill.skillName}</div>
             ))}
           </div>
         </section>
       )}
 
-      {/* Certificates */}
-      {certificates?.length > 0 && (
-        <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">Certificates</h2>
+      {educations.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Education
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
 
-          <div className="space-y-1">
-            {certificates.map((cert) => (
-              <div key={cert.id} className="flex justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <span className="font-medium break-words">{cert.title}</span>
-                  {cert.issuer && (
-                    <span className="text-gray-800 ml-1 break-words">
-                      {cert.issuer}
-                    </span>
-                  )}
+          {educations.map((edu) => (
+            <div key={edu.id} className="mb-2">
+              <div className="flex justify-between">
+                <div>
+                  <span className="font-semibold">{edu.degree}</span>
+                  {" - "}
+                  {edu.school}
                 </div>
-
-                {cert.year && (
-                  <span className="text-right text-gray-600 whitespace-nowrap">
-                    {cert.year}
-                  </span>
-                )}
+                <span className="text-gray-600">
+                  {edu.startYear} – {edu.endYear}
+                </span>
               </div>
-            ))}
-          </div>
+
+              {edu.description && (
+                <p className="text-[12px] text-gray-700 mt-1">
+                  {edu.description}
+                </p>
+              )}
+            </div>
+          ))}
         </section>
       )}
 
-      {/* Achievements */}
-      {achievements?.length > 0 && (
-        <section className="mt-3">
-          <h2 className="text-[13px] font-bold uppercase mb-1">Achievements</h2>
+      {certificates.length > 0 && (
+        <section className="mb-4">
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Certificates
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
 
-          <div className="space-y-1">
-            {achievements.map((ach) => (
-              <div key={ach.id} className="space-y-0.5">
-                <div className="flex justify-between gap-3">
-                  <span className="font-medium break-words">{ach.title}</span>
-                  {ach.year && (
-                    <span className="text-right text-gray-600 whitespace-nowrap">
-                      {ach.year}
-                    </span>
-                  )}
-                </div>
-
-                {ach.description && (
-                  <p className="text-gray-700 text-[12px] whitespace-pre-line break-words">
-                    {ach.description}
-                  </p>
-                )}
+          {certificates.map((cert) => (
+            <div
+              key={cert.id}
+              className="flex justify-between text-[12px] mb-1"
+            >
+              <div>
+                <span className="font-semibold">{cert.title}</span>
+                {cert.issuer && ` — ${cert.issuer}`}
               </div>
-            ))}
-          </div>
+              {cert.year && <span>{cert.year}</span>}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {achievements.length > 0 && (
+        <section>
+          <h2 className="font-bold uppercase text-[13px] mb-1 pb-[2px] flex items-center">
+            <span className="border border-gray-400 rounded-xl py-[2px] px-[10px] bg-gray-400 mr-2 text-center">
+              Achievements
+            </span>
+            <span className="flex-1 border-t border-gray-400"></span>
+          </h2>
+
+          {achievements.map((ach) => (
+            <div key={ach.id} className="mb-2">
+              <div className="flex justify-between text-[12px]">
+                <span className="font-semibold">{ach.title}</span>
+                {ach.year && <span>{ach.year}</span>}
+              </div>
+
+              {ach.description && (
+                <p className="text-[12px] text-gray-700">{ach.description}</p>
+              )}
+            </div>
+          ))}
         </section>
       )}
     </div>

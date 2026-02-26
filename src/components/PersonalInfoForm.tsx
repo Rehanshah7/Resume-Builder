@@ -54,6 +54,12 @@ export default function PersonalInfoForm() {
 
       <input
         className="w-full border rounded p-2"
+        placeholder="Github URL"
+        {...register("github")}
+      />
+
+      <input
+        className="w-full border rounded p-2"
         placeholder="Location"
         {...register("location")}
       />
